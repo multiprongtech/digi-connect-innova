@@ -1,0 +1,33 @@
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+
+# Build output
+build/
+
+# Release files
+*.apk
+*.aab
+
+# Android
+android/.gradle/
+android/local.properties
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+
+# Xcode
+*.xcworkspace
+xcuserdata/
+
+# Android Studio
+.idea/
+*.iml
+
+# Mac
+.DS_Store
