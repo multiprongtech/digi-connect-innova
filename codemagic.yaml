@@ -6,30 +6,26 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.ipca.digiConnect
-      vars:
-        APP_STORE_CONNECT_ISSUER_ID: 69a6de76-e283-47e3-e053-5b8c7c11a4d1
-        APP_STORE_CONNECT_KEY_IDENTIFIER: Y34L3DZ4CF
-        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(...) # to be set in Codemagic UI
       flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
       - name: Get Flutter packages
         script: flutter pub get
-      - name: Install pods
-        script: find . -name "Podfile" -execdir pod install \;
-      - name: Build iOS release
+      - name: Install CocoaPods
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+      - name: Build iOS release IPA
         script: |
           flutter build ipa --release \
             --build-name=1.7.4 \
-            --build-number=$PROJECT_BUILD_NUMBER \
-            --export-options-plist=/Users/builder/export_options.plist
+            --build-number=$BUILD_NUMBER
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
     publishing:
       app_store_connect:
         api_key: $APP_STORE_CONNECT_PRIVATE_KEY
-        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        key_id: Y34L3DZ4CF
+        issuer_id: 69a6de76-e283-47e3-e053-5b8c7c11a4d1
         submit_to_testflight: true
