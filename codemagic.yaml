@@ -10,16 +10,19 @@ workflows:
       xcode: latest
       cocoapods: default
     scripts:
+      - name: Disable Swift Package Manager
+        script: flutter config --no-enable-swift-package-manager
       - name: Get Flutter packages
         script: flutter pub get
       - name: Install CocoaPods
         script: |
-          find . -name "Podfile" -execdir pod install \;
+          cd ios && pod install
       - name: Build iOS release IPA
         script: |
           flutter build ipa --release \
             --build-name=1.7.4 \
-            --build-number=$BUILD_NUMBER
+            --build-number=$BUILD_NUMBER \
+            --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
